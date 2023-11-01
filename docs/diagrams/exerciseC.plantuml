@@ -1,0 +1,109 @@
+
+@startuml
+
+' 1)
+
+class Point {
+  - cord_x: float
+  - cord_y: float
+  + getcord_x(): float
+  + getcord_y(): float
+}
+
+class Polygon {
+  - points: List<Point>
+  + addPoint(point: Point): void
+  + containsPoint(point: Point): boolean
+}
+
+object PolygonT1 {
+  points: List<Point>
+}
+
+object LeftPoint {
+  cord_x: 0
+  cord_y: 0
+}
+
+
+object RightPoint {
+  cord_x: 10
+  cord_y: 10
+}
+
+
+object BottomPoint {
+  cord_x: 10
+  cord_y: 0
+}
+
+LeftPoint - PolygonT1
+PolygonT1 - RightPoint
+PolygonT1 -- BottomPoint 
+
+' 2)
+'
+class Triangle extends Polygon {
+  - points: List<Point>
+  + addPoint(point: Point): void
+  + getPoints(): List<Point>
+}
+
+
+object Point1 {
+  cord_x: 0
+  cord_y: 0
+}
+
+object Point2 {
+  cord_x: 1
+  cord_y: 0
+}
+
+object Point3 {
+  cord_x: 0
+  cord_y: 1
+}
+
+
+object Point4 {
+  cord_x: 1
+  cord_y: 1
+}
+
+object Point5 {
+  cord_x: 10
+  cord_y: 1
+}
+
+
+object Triangle1 {
+
+}
+
+object Triangle2 {
+}
+
+
+
+Point1 "0..*" -- "1" Triangle1 
+Point2 "0..*" -- "1" Triangle1 
+Point3 "0..*" -- "1" Triangle1 
+
+Point1 "0..*" -- "1" Triangle2 
+Point4 "0..*" -- "1" Triangle2 
+Point5 "0..*" -- "1" Triangle2 
+
+' 3)
+
+object Polygon {
+  points: List<Point>
+}
+
+
+Polygon --> Point1
+Polygon --> Point2
+Polygon --> Point3
+Polygon --> Point4
+
+@enduml
