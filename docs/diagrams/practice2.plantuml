@@ -1,0 +1,132 @@
+@startuml
+
+class Person {
+  + name: String
+  + phone: String
+  + direction: String
+}
+
+class Player extends Person{
+  + number: String
+  + position: String
+}
+
+class Trainer extends Person {
+  + accreditationLevel: String 
+  + experienceOnYear: uint 
+  + train(team: Team): bool 
+}
+
+class Team {
+  + name: String
+  + members: List<Person>
+  + captain
+  + trainer
+  + register: uint 
+}
+
+class Game {
+  + location: String
+  + teams: Team[2] 
+  + score(team: Team): uint
+  + markPoint(team: Team): bool 
+}
+
+Team "6..20" --* "1" Player 
+Team "1" --o "0..1" Trainer 
+Player "1" -- "1" Team 
+Trainer "0..*" -- "1..*" Team 
+Game "2" -- "1" Team 
+
+rectangle "Game" {
+ 
+
+object Venezuela {
+  name: "Venezuela"
+  members: [VenezuelaPlayer1, VenezuelaPlayer2, VenezuelaCaptain...VenezuelaPlayerN]
+  trainer: VenezuelaTrainer
+  register: 100
+} 
+object Colombia {
+  name: "Colombia"
+  members: [VenezuelaPlayer1, VenezuelaPlayer2, VenezuelaCaptain...VenezuelaPlayerN]
+  trainer: VenezuelaTrainer
+  register: 100
+
+} 
+object Game{
+  location: "chile"
+  teams: [Venezuela, Colombia]
+  score: {vzla: 1, col: 0}
+} 
+
+' captain and trainers
+object VenezuelaCaptain {
+  name: "Rondon"
+  phone: "444-444"
+  number: 0
+  direction: "Sesamo street"
+} 
+object VenezuelaTrainer {
+  name: "Trainer"
+  phone: "333-333"
+  direction: "Sesamo street"
+  accreditationLevel: 1
+} 
+
+object ColombiaCaptain {
+  name: "Vayuste"
+  phone: "444-444"
+  number: 0
+  direction: "Sesamo street"
+}
+object ColombiaTrainer {
+  name: "Trainer"
+  phone: "333-333"
+  direction: "Sesamo street"
+  accreditationLevel: 1
+} 
+
+' players 
+object VenezuelaPlayer1 {
+  name: "Fulano"
+  phone: "555-555-555"
+  number: 1
+  direction: "Sesamo street"
+} 
+object VenezuelaPlayer2 {
+  name: "Menguano"
+  phone: "555-555-555"
+  number: 2
+  direction: "Sesamo street"
+}
+
+object ColombiaPlayer1 {
+  name: "Fulano 2"
+  phone: "555-555-555"
+  number: 1
+  direction: "Sesamo street"
+} 
+object ColombiaPlayer2 {
+  name: "Menguano 2"
+  phone: "555-555-555"
+  number: 2
+  direction: "Sesamo street"
+} 
+
+Venezuela --o VenezuelaTrainer
+Venezuela --* VenezuelaCaptain
+Venezuela --* VenezuelaPlayer1
+Venezuela --* VenezuelaPlayer2
+
+Colombia --* ColombiaCaptain
+Colombia --o ColombiaTrainer
+Colombia --* ColombiaPlayer1
+Colombia --* ColombiaPlayer2
+
+Game --* Venezuela
+Game --* Colombia
+
+}
+
+@enduml

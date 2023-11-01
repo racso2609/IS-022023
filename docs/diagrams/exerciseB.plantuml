@@ -1,0 +1,219 @@
+@startuml
+
+class Key {
+  + character: char 
+  + onTrigger(): void
+}
+
+class Keyboard {
+  - keys: List<Key> 
+  + getNumberOfKeys(): int
+  + setNumberOfKeys(numberOfKeys: int): void
+}
+
+class Person {
+  - age: int
+  + getAge(): int
+  + getComision(): String 
+}
+
+class Teacher extends Person {
+  - degrees: List<String>
+  + getDegree(): List<String> 
+}
+
+class Employee extends Person {
+  - role: String
+  + getRole(): String 
+}
+
+class Student extends Person {
+  - carer: String
+  + getCarer(): String
+}
+
+class HDD {
+  - capacity: int
+  - tracks: List<Track>
+  + getTracks(): List<Track>
+  + getCapacity(): int
+  + getCapacityInMB(): int
+  + getCapacityInGB(): int
+  + getCapacityInTB(): int
+}
+
+class Track {
+  - sector: List<Sector>
+  + getSector():  List<Sector>
+}
+
+class Sector {
+  + uid: int
+}
+
+class Polygon {
+  - numberOfSides: int 
+  + getNumberOfSides() int:
+}
+
+class Triangle extends Polygon {
+  - numberOfSides: int = 3 
+}
+
+class BaseBallTeam {
+  - players: List<People>
+  - homeClub: Stadium
+  + getPlayer(): List<People>
+  + getHomeClub(): Stadium 
+}
+
+class Stadium {
+  - name: String
+  - ownerTeam: BaseBallTeam 
+  + getName(): String 
+  + getOwnerTeam(): BaseBallTeam 
+}
+
+class Commission {
+  - name: String
+  - members: List<Person>
+  - coordinator: Person
+  + getName(): String
+  + getLeader(): Person 
+  + getMembers(): List<Person> 
+
+}
+
+class Player extends Person {
+  - position: String (CF | RF.. etc)
+  + getPosition(): Strig
+}
+
+class Scientist extends Person {
+  + isNuclear: bool = false
+}
+
+object NuclearScientist {
+  isNuclear:  true;
+}
+
+
+object NormalScientist {
+  isNuclear:  false;
+}
+
+
+class Laboratory {
+  - teams: List<List<NormalScientist>>;
+  + getTeams(): List<List<ScientistsTeam>>
+}
+
+class NuclearLaboratory  extends Laboratory{
+  - teams: List<List<NuclearScientist>>;
+  + getTeams(): List<List<NuclearScientist>>
+}
+
+
+class Criterion {
+}
+
+class Characterization {
+}
+
+class ClassifiedElement {
+}
+
+class FunctionPoints {
+  + calculateFP(UFC: int, TCF: double): double
+}
+
+class TechnicalComplexityFactor {
+  + calculateTCF(Fi: double[]): double
+}
+
+class Subfactor {
+  - weight: double
+  + getWeight(): double
+  + setWeight(weight: double): void
+}
+
+class InvestigationWork {
+  - teachers: Teachers[2]
+  - members: List<Student>
+  - membersMaxLength?: uint
+  + getTeachers(): Teachers[]
+  + getMembers(): List<Person>
+  + getMembersMaxLength(): uint 
+
+} 
+
+class TEG  extends InvestigationWork {
+  membersMaxLength: uint = 2
+}
+
+class TGM extends InvestigationWork {
+  membersMaxLength: uint = 1
+}
+
+class Document {
+  - sheets: List<Sheet>
+  + addSheet(sheet: Sheet): void
+}
+
+class Sheet {
+  - drawingObject: DrawingObject
+  + setDrawingObject(drawingObject: DrawingObject): void
+  + getDrawingObject(): DrawingObject
+}
+
+abstract class DrawingObject {
+  + draw(): void
+}
+
+class Text extends DrawingObject {
+}
+
+abstract class Shape2D extends DrawingObject {
+}
+
+class Circle extends Shape2D {
+}
+
+class Square extends Shape2D {
+}
+
+class Group extends DrawingObject {
+  - members: List<DrawingObject>
+  + addMember(member: DrawingObject): void
+}
+
+Keyboard "105..*" --* "1" Key : contain 
+
+HDD "1..*" --* "1" Track : contain
+Track "1..*" --* "1" Sector : contain
+
+BaseBallTeam  o..o Stadium : contain
+
+Commission "2..*" ..*  "1" Person
+Scientist <|-- NormalScientist
+Scientist <|-- NuclearScientist
+NormalScientist "1" *-- "1..*" Laboratory
+NuclearScientist "1" *-- "1..*" NuclearLaboratory
+
+Characterization "1..*" --* "1" Criterion  : uses
+ClassifiedElement "1" --* "1" Characterization  : generates
+
+
+FunctionPoints --* TechnicalComplexityFactor : uses
+TechnicalComplexityFactor "14" --> "1" Subfactor : depends on
+
+Teacher "1" --* "1..2" InvestigationWork
+Student "1" --* "1..2" TEG
+Student "1" --* "1" TGM
+
+
+Document "1..*" --* "1" Sheet
+Sheet "1" --o "1" DrawingObject
+Group "2..*" --* "1" DrawingObject : contains
+
+@enduml
