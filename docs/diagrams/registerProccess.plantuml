@@ -1,0 +1,14 @@
+@startuml
+
+participant Registro
+participant Sale
+
+Registro -> Sale: createLineSale(spec, qty)
+Sale -> Registro: <<return>>
+Registro -> CatalogProducts: getSpecification(id)
+CatalogProducts --> Registro: spec
+Registro -> Sale: createLineSale(spec, qty)
+Sale -> Sale: createLineSale(spec, qty)
+Sale -> ArrayList: add(new SaleLine(spec, qty))
+
+@enduml
